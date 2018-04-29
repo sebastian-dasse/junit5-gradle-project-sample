@@ -1,0 +1,54 @@
+group 'de.sebdas'
+version '1.0-SNAPSHOT'
+
+ext {
+    junit4Version        = '4.12'
+    junit5Version        = '5.1.1'
+    junitPlatformVersion = '1.1.1'
+    mockitoVersion       = '2.18.3'
+    assertjVersion       = '3.9.0'
+}
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath group: 'org.junit.platform', name: 'junit-platform-gradle-plugin', version: '1.1.1'
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'org.junit.platform.gradle.plugin'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    testCompile group: 'org.junit.jupiter',  name: 'junit-jupiter-api',     version: junit5Version
+    testCompile group: 'org.junit.jupiter',  name: 'junit-jupiter-params',  version: junit5Version
+    testRuntime group: 'org.junit.jupiter',  name: 'junit-jupiter-engine',  version: junit5Version
+
+    testCompile group: 'junit',              name: 'junit',                 version: junit4Version
+    testRuntime group: 'org.junit.vintage',  name: 'junit-vintage-engine',  version: junit5Version
+
+    testRuntime group: 'org.junit.platform', name: 'junit-platform-runner', version: junitPlatformVersion
+
+    testCompile group: 'org.assertj',        name: 'assertj-core',          version: assertjVersion
+    testCompile group: 'org.mockito',        name: 'mockito-core',          version: mockitoVersion
+    testCompile group: 'org.mockito',        name: 'mockito-junit-jupiter', version: mockitoVersion
+
+    testCompile group: 'info.solidsoft.mockito', name: 'mockito-java8', version: '2.3.0'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+junitPlatform {
+    enableStandardTestTask true
+}
